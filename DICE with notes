@@ -1,0 +1,167 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PRG301_Challenge1
+{
+    class Program
+    {
+
+        //Creating list called 'items'
+        List<int> items = new List<int>();
+
+        //Creating array for the dice numbers
+        int[] diceNUmbers = { 1, 2, 3, 4, 5, 6 };
+        
+        /Setting up loops
+        int loopCounter = 0;
+        
+        int loopCounter2 = 0;
+
+        //Creating function called roll() - Everything in the curly braces of roll() is what is does
+        void roll()
+        {
+            while (loopCounter < 1)
+            {
+
+                string rollInput = Console.ReadLine();
+
+                //Creating randomizer
+                Random random = new Random();
+                int start2 = random.Next(0, diceNUmbers.Length);
+
+                //When user inputs "roll":
+                //1. it will randomly choose and print a number from the dice array
+                //2. Asks the user if they want to roll again
+                //3. Adds +1 to the loopCounter, ending the loop
+                //4. Adds the number rolled into the 'items' list
+                //5. Calls the yesNo function() - this function is found underneath this one
+                if (rollInput == "roll")
+                {
+                    Console.WriteLine();
+
+                    //1.
+                    Console.WriteLine(diceNUmbers[start2]);
+
+                    //2.
+                    Console.WriteLine();
+                    Console.WriteLine("Roll again? If so type yes, if not no.");
+                    Console.WriteLine();
+
+                    //3.
+                    loopCounter++;
+
+                    //4.
+                    items.Add(diceNUmbers[start2]);
+
+                    //5.
+                    yesNo();
+
+
+                }
+                else
+                {
+                //If the user does not type in roll
+                //Resets loop counter
+                //And runs the funciton again
+                    Console.WriteLine();
+                    Console.WriteLine("Please type 'roll'.");
+                    Console.WriteLine();
+                    loopCounter = 0;
+                    roll();
+                }
+            }
+
+            //Creating function called yesNo()
+            void yesNo()
+            {
+                string yesNoInput = Console.ReadLine();
+
+                //If user wants to roll again they type "yes"
+                //And resets loopCounter and calls the roll() function
+                if (yesNoInput == "yes")
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Type 'roll' to roll dice.");
+                    Console.WriteLine();
+                    loopCounter = 0;
+                    roll();
+                }
+                
+                //If they do not want to go again they type "no"
+                else if (yesNoInput == "no")
+                {
+                    Console.WriteLine();
+                    //Displays all the rolls
+                    items.ForEach(Console.WriteLine);
+                    Console.WriteLine();
+                    Console.WriteLine("How many numbers do you want to examine?");
+                }
+            }
+        }
+
+         static void Main(string[] args)
+        {
+            Console.Write("Type 'roll' to roll dice.");
+            Console.WriteLine();
+            Console.WriteLine();
+
+            //calls the roll() function
+            //reason why it says p.roll() because the function is under the "class" called "program" as seen on top
+            Program p = new Program();
+                p.roll();
+
+                Console.WriteLine();
+                //sets up the number of rolls the user wants to see in the list
+                string examineAmount = Console.ReadLine();
+                int userExamine = int.Parse(examineAmount);
+                p.items.RemoveRange(userExamine, p.items.Count - userExamine);
+
+
+                while (p.loopCounter2 < 1)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Filter: list, average or Total?");
+                    Console.WriteLine();
+                    string filterInput = Console.ReadLine();
+                    if (filterInput == "average")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(p.items.Average());
+                    }
+                    else if (filterInput == "total")
+                    {
+                        Console.WriteLine();
+                        Console.WriteLine(p.items.Sum());
+                    }
+
+                    else if (filterInput == "list")
+                    {
+                        Console.WriteLine();
+                        p.items.ForEach(Console.WriteLine);
+                    }
+                    Console.WriteLine();
+                    Console.WriteLine("Filter again?");
+                    Console.WriteLine();
+                    string yesNoInput2 = Console.ReadLine();
+                    if (yesNoInput2 == "yes")
+                    {
+                        p.loopCounter2 = 0;
+                    }
+                    if (yesNoInput2 == "no")
+                    {
+                     p.loopCounter2++;
+                    }
+                }
+
+            Console.WriteLine();
+            Console.WriteLine("Finished.");
+
+                Console.ReadKey();
+            }
+        }
+    }
+
+
