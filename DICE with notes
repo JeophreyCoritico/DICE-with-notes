@@ -15,7 +15,7 @@ namespace PRG301_Challenge1
         //Creating array for the dice numbers
         int[] diceNUmbers = { 1, 2, 3, 4, 5, 6 };
         
-        /Setting up loops
+        //Setting up loops
         int loopCounter = 0;
         
         int loopCounter2 = 0;
